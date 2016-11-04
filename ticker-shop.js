@@ -1,7 +1,7 @@
 var https = require("https");
 
-function printMessage(ticker, price) {
-  var message = ticker + ": $" + price;
+function printMessage(name, ticker, price) {
+  var message = name + " (" + ticker + "): $" + price;
   console.log(message);
 }
 
@@ -19,7 +19,7 @@ function get(ticker) {
     if(response.statusCode === 200) {
       try {
         var snapshot = JSON.parse(body);
-        printMessage(snapshot.query.results.quote.symbol, snapshot.query.results.quote.Ask);
+        printMessage(snapshot.query.results.quote.Name,snapshot.query.results.quote.symbol, snapshot.query.results.quote.Ask);
       } catch(error) {
         printError(error);
       }
