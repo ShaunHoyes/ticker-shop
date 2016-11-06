@@ -1,7 +1,7 @@
 var https = require("https");
 
-function printMessage(name, ticker, price) {
-  var message = name + " (" + ticker + "): $" + price;
+function printMessage(name, symbol, price) {
+  var message = name + " (" + symbol + "): $" + price;
   console.log(message);
 }
 
@@ -10,7 +10,7 @@ function printError(error) {
 }
 
 function get(ticker) {
-  var request = https.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20('" + ticker + "')%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json", function(response) {
+  var request = https.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20('" + ticker.toUpperCase() + "')%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json", function(response) {
   var body = "";
   response.on('data', function (chunk) {
     body += chunk;
@@ -19,7 +19,7 @@ function get(ticker) {
     if(response.statusCode === 200) {
       try {
         var snapshot = JSON.parse(body);
-        printMessage(snapshot.query.results.quote.Name,snapshot.query.results.quote.symbol, snapshot.query.results.quote.Ask);
+        printMessage(snapshot.query.results.quote.Name, snapshot.query.results.quote.symbol, snapshot.query.results.quote.Ask);
       } catch(error) {
         printError(error);
       }
