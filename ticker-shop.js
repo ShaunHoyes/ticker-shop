@@ -1,8 +1,9 @@
 var https = require("https");
+var colors = require('colors');
 
 function printMessage(name, symbol, price) {
   var message = name + " (" + symbol + "): $" + price;
-  console.log(message);
+  console.log(message.green);
 }
 
 function printError(error) {
